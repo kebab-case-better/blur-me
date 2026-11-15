@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Floutage de visages — 100 % local</title>
+<meta name="description" content="Floutez les visages de vos photos et vidéos directement dans votre navigateur. Rien n'est envoyé sur Internet.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <header>
+    <h1>Floutage de visages</h1>
+    <p class="lead">Photos et vidéos, traitées <strong>sur votre appareil</strong>. Aucun fichier n'est envoyé sur Internet : une fois la page chargée, vous pouvez même couper votre connexion.</p>
+  </header>
+
+  <label id="drop" class="drop" for="file">
+    <input id="file" type="file" accept="image/*,video/*" hidden>
+    <span class="drop-title">Choisir une photo ou une vidéo</span>
+    <span class="drop-sub">ou glissez-déposez le fichier ici</span>
+  </label>
+
+  <p id="status" class="status" role="status">Chargement du détecteur de visages…</p>
+
+  <section id="work" hidden>
+    <div class="controls">
+      <label>Style
+        <select id="style">
+          <option value="blur">Flou</option>
+          <option value="pixel">Pixels</option>
+          <option value="black">Cache noir</option>
+        </select>
+      </label>
+      <label>Intensité
+        <input id="strength" type="range" min="0" max="100" value="70">
+      </label>
+      <label>Marge autour du visage
+        <input id="margin" type="range" min="0" max="100" value="35">
+      </label>
+      <label>Sensibilité de détection
+        <input id="sens" type="range" min="0" max="100" value="60">
+      </label>
+    </div>
+
+    <div class="stage">
+      <canvas id="canvas"></canvas>
+    </div>
+    <progress id="progress" value="0" max="1" hidden></progress>
+
+    <p id="hint" class="hint"></p>
+
+    <div class="actions">
+      <button id="go" class="primary" hidden>Flouter la vidéo</button>
+      <button id="cancel" hidden>Annuler</button>
+      <a id="download" class="button primary" hidden>Télécharger</a>
+    </div>
+    <video id="result" controls playsinline hidden></video>
+  </section>
+
+  <footer>
+    <p><strong>Vérifiez toujours le résultat avant de publier.</strong> La détection automatique peut manquer des visages (de profil, masqués, très petits ou en mouvement rapide). Sur une photo, tracez un rectangle pour ajouter une zone à la main.</p>
+    <p>Les fichiers exportés sont recréés à partir des pixels : les métadonnées d'origine (GPS, appareil, date) ne sont pas conservées.</p>
+    <p>Détection : <a href="https://github.com/vladmandic/face-api">face-api</a> (licence MIT), exécutée dans le navigateur.</p>
+  </footer>
+</main>
+<video id="src" playsinline hidden></video>
+<script src="lib/face-api.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
