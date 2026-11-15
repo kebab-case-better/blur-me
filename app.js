@@ -365,6 +365,12 @@ const drop = $('drop');
 ['dragenter', 'dragover'].forEach((t) => document.addEventListener(t, (e) => { e.preventDefault(); drop.classList.add('over'); }));
 ['dragleave', 'drop'].forEach((t) => document.addEventListener(t, (e) => { e.preventDefault(); drop.classList.remove('over'); }));
 document.addEventListener('drop', (e) => openFile(e.dataTransfer.files[0]));
+document.addEventListener('paste', (e) => {
+  const file = [...(e.clipboardData?.files || [])].find((f) => /^(image|video)\//.test(f.type));
+  if (!file) return;
+  e.preventDefault();
+  openFile(file);
+});
 
 for (const id of ['style', 'strength', 'margin']) {
   $(id).addEventListener('input', () => { if (mode === 'photo' && photo) renderPhoto(); });
